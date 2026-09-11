@@ -30,8 +30,8 @@ export function sessionCookieValue(): string {
   return expectedToken();
 }
 
-export function isAuthed(): boolean {
-  const store = cookies();
+export async function isAuthed(): Promise<boolean> {
+  const store = await Promise.resolve(cookies());
   const cookie = store.get(COOKIE_NAME);
   if (!cookie) return false;
   return cookie.value === expectedToken();
