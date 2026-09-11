@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1125" viewBox="0 0 900 1125">
+  <rect width="900" height="1125" fill="#F7F2EA"/>
+  <rect x="1" y="1" width="898" height="1123" fill="none" stroke="#E4DDD1" stroke-width="2"/>
+  <line x1="0" y1="0" x2="900" y2="1125" stroke="#E4DDD1" stroke-width="1"/>
+  <line x1="900" y1="0" x2="0" y2="1125" stroke="#E4DDD1" stroke-width="1"/>
+  <text x="50%" y="50%" font-family="Georgia, serif" font-size="32" fill="#7A1B24" text-anchor="middle" dominant-baseline="middle">About photo — replace in Admin</text>
+</svg>

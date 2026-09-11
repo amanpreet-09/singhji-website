@@ -1,0 +1,19 @@
+services:
+  singhji-website:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: singhji-website
+    env_file: .env.local
+    ports:
+      - "3001:3000"
+    environment:
+      NODE_ENV: production
+    volumes:
+      - singhji_data:/app/data
+      - singhji_uploads:/app/public/uploads
+    restart: always
+
+volumes:
+  singhji_data:
+  singhji_uploads:

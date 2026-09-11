@@ -1,0 +1,109 @@
+{
+  "business": {
+    "name": "Singhji Enterprises",
+    "tagline": "Wholesale & Custom Apparel",
+    "phone": "9845082913",
+    "whatsapp": "919845082913",
+    "email": "singhjienterprises913@gmail.com",
+    "address": "Dutta Prasad Layout, Sultan Battery Road, Boloor, Mangaluru - 575006, Karnataka, India",
+    "mapsUrl": "https://maps.google.com/?q=Sultan+Battery+Road+Boloor+Mangaluru+575006",
+    "logo": "/uploads/logo-placeholder.svg"
+  },
+  "home": {
+    "heroHeadline": "Quality in every stitch, trusted by institutions.",
+    "heroSubtext": "We manufacture and supply school uniforms, sportswear, corporate wear and custom apparel — built for bulk orders and institutional standards.",
+    "heroImage": "/uploads/hero-placeholder.svg",
+    "highlights": [
+      {
+        "title": "Custom Designs",
+        "text": "Your fabric, your logo, your fit."
+      },
+      {
+        "title": "Bulk Orders",
+        "text": "Built for schools, teams and companies."
+      },
+      {
+        "title": "Timely Delivery",
+        "text": "Pan India delivery, on schedule."
+      }
+    ],
+    "servicesStrip": [
+      "Custom Manufacturing",
+      "Fabric Selection",
+      "Logo Embroidery / Printing",
+      "Institutional Orders",
+      "Bulk Supply",
+      "Pan India Delivery"
+    ]
+  },
+  "about": {
+    "heading": "About Singhji Enterprises",
+    "body": "Singhji Enterprises is a wholesale and custom apparel manufacturer based in Mangaluru, Karnataka. We supply schools, sports clubs, corporates and institutions across India with uniforms and apparel built to last a full academic or working year.\n\nEvery order is handled from fabric selection through to final stitching, embroidery and delivery, so institutions get one dependable partner for their entire apparel requirement.",
+    "proprietor": "Amarjeet Singh Lohia",
+    "proprietorTitle": "Proprietor",
+    "image": "/uploads/about-placeholder.svg"
+  },
+  "products": {
+    "heading": "Our Product Range",
+    "categories": [
+      {
+        "id": "school-uniforms",
+        "title": "School Uniforms",
+        "description": "Shirts, skirts, pants, blazers, sweaters.",
+        "image": "/uploads/1789035928721-358949.jpeg"
+      },
+      {
+        "id": "sportswear",
+        "title": "Sportswear",
+        "description": "Jerseys, t-shirts, shorts, track suits.",
+        "image": "/uploads/1789035986278-119093.jpeg"
+      },
+      {
+        "id": "corporate-wear",
+        "title": "Corporate Wear",
+        "description": "Polo t-shirts, corporate t-shirts, formal wear.",
+        "image": "/uploads/1789035974930-231161.jpeg"
+      },
+      {
+        "id": "custom-tshirts",
+        "title": "Custom T-Shirts",
+        "description": "Event wear, team wear, promotional t-shirts.",
+        "image": "/uploads/cat-tshirts-placeholder.svg"
+      },
+      {
+        "id": "track-suits",
+        "title": "Track Suits",
+        "description": "Track jackets, track pants, sports sets.",
+        "image": "/uploads/cat-tracksuits-placeholder.svg"
+      },
+      {
+        "id": "hoodies",
+        "title": "Hoodies & Sweatshirts",
+        "description": "Comfortable and stylish.",
+        "image": "/uploads/cat-hoodies-placeholder.svg"
+      },
+      {
+        "id": "blazers",
+        "title": "Blazers & Sweaters",
+        "description": "For schools and institutions.",
+        "image": "/uploads/1789036023279-548203.jpeg"
+      },
+      {
+        "id": "accessories",
+        "title": "Accessories",
+        "description": "Ties, belts, socks.",
+        "image": "/uploads/1789036027832-928796.jpeg"
+      },
+      {
+        "id": "sublimation",
+        "title": "Sublimation Printing",
+        "description": "Custom prints, logos and designs.",
+        "image": "/uploads/1789036045762-865683.jpeg"
+      }
+    ]
+  },
+  "contact": {
+    "heading": "Get in touch",
+    "subtext": "For bulk orders, institutional supply or custom apparel enquiries, reach us directly on WhatsApp or the details below."
+  }
+}
