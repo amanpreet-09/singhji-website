@@ -10,10 +10,8 @@ services:
     environment:
       NODE_ENV: production
     volumes:
-      - singhji_data:/app/data
-      - singhji_uploads:/app/public/uploads
+      - singhji_storage:/app/storage
     restart: always
 
 volumes:
-  singhji_data:
-  singhji_uploads:
+  singhji_storage:

@@ -54,32 +54,27 @@ go to **http://localhost:3000/admin** and log in with the password you set above
 
 Two options:
 - Log in at `/admin/dashboard` → Business details → "Replace photo" under Logo, or
-- Directly replace `public/uploads/logo-placeholder.svg` with your own logo file,
-  then update the `logo` path in `data/content.json` if you rename it.
+- Directly replace `storage/logo-placeholder.svg` with your own logo file,
+  then update the `logo` path in `storage/content.json` if you rename it.
 
 All other photos (hero image, about photo, and each product category photo)
 work the same way — replace them any time from the dashboard.
 
 ## How the admin panel works
 
-- All site text and image paths live in `data/content.json`.
+- All site text and image paths live in `storage/content.json`, and uploaded
+  photos are saved next to it in `storage/`.
 - When you edit something in the dashboard and hit **Save changes**, that file
   is updated directly, and the public pages reflect it immediately (refresh
-  the page to see it).
-- Uploaded photos are saved into `public/uploads/`.
+  the page to see it). Pages are rendered on every request, so no rebuild is needed.
+- The first time the site runs with an empty `storage/` folder, it is filled
+  from `seed/` (starting text + placeholder photos). Edit `seed/` only to
+  change the defaults for a fresh install.
 
-**Important note for later, when you deploy:** this simple approach writes
-directly to files on disk, which works perfectly on your computer and on most
-regular hosting. If you deploy to Vercel specifically, Vercel's servers don't
-allow saving files after deployment, so the admin "Save" wouldn't persist
-there. When you're ready to deploy, tell me and I'll either:
-- point you to a host that does allow file writes (e.g. a small VPS, Railway, or Render), or
-- upgrade the admin panel to use Supabase (a free database + photo storage
-  service) so it works on Vercel too, without changing how the dashboard looks
-  or works for you.
-
-Either way, nothing changes about how you use the dashboard — this is purely
-a backend detail we'll sort out at deployment time, as you asked.
+**Deploying:** `storage/` must be on persistent disk, or every redeploy wipes
+your edits. The Docker image sets `STORAGE_DIR=/app/storage`. On Railway,
+attach a Volume to the service: the app automatically stores everything at
+the volume's mount path (`RAILWAY_VOLUME_MOUNT_PATH`).
 
 ## Project structure
 
@@ -88,9 +83,9 @@ app/                  → pages (home, products, about, contact, admin)
 app/api/               → backend routes (login, save content, upload photos)
 components/            → header, footer, WhatsApp button, product cards
 components/admin/      → dashboard's photo uploader
-data/content.json      → all editable site text + image paths
+seed/                  → starting content.json + placeholder photos
 lib/                   → content read/write + admin auth helpers
-public/uploads/        → all uploaded/placeholder photos
+storage/               → live content.json + uploaded photos (not in git)
 ```
 
 ## Making further changes with Claude Code

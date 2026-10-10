@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isAuthed } from '@/lib/auth';
+import { revalidatePath } from 'next/cache';
 import { saveContent, SiteContent } from '@/lib/content';
 
 export async function POST(req: NextRequest) {
-  if (!isAuthed()) {
+  if (!(await isAuthed())) {
     return NextResponse.json({ error: 'Not authorized' }, { status: 401 });
   }
 
@@ -15,5 +16,6 @@ export async function POST(req: NextRequest) {
   }
 
   saveContent(body);
+  revalidatePath('/', 'layout');
   return NextResponse.json({ ok: true });
 }

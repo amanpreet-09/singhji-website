@@ -2,9 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { isAuthed } from '@/lib/auth';
 import fs from 'fs';
 import path from 'path';
+import { ensureStorage, UPLOAD_DIR } from '@/lib/storage';
 
-const UPLOAD_DIR = path.join(process.cwd(), 'public', 'uploads');
-const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'];
+const EXTENSIONS: Record<string, string> = {
+  'image/jpeg': 'jpg',
+  'image/png': 'png',
+  'image/webp': 'webp',
+  'image/svg+xml': 'svg'
+};
 const MAX_SIZE = 5 * 1024 * 1024; // 5MB
 
 export async function POST(req: NextRequest) {
@@ -19,7 +24,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'No file provided' }, { status: 400 });
   }
 
-  if (!ALLOWED_TYPES.includes(file.type)) {
+  const ext = EXTENSIONS[file.type];
+  if (!ext) {
     return NextResponse.json(
       { error: 'Only JPG, PNG, WEBP or SVG images are allowed' },
       { status: 400 }
@@ -30,11 +36,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'File must be under 5MB' }, { status: 400 });
   }
 
-  if (!fs.existsSync(UPLOAD_DIR)) {
-    fs.mkdirSync(UPLOAD_DIR, { recursive: true });
-  }
+  ensureStorage();
 
-  const ext = file.name.split('.').pop() || 'jpg';
   const safeName = `${Date.now()}-${Math.round(Math.random() * 1e6)}.${ext}`;
   const filePath = path.join(UPLOAD_DIR, safeName);
 

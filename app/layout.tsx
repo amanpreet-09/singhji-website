@@ -6,6 +6,10 @@ import Footer from '@/components/Footer';
 import WhatsAppFloatButton from '@/components/WhatsAppFloatButton';
 import { getContent } from '@/lib/content';
 
+// Pages read content.json on every request so admin edits show up right away
+// (otherwise Next.js would bake the content in at build time).
+export const dynamic = 'force-dynamic';
+
 const fraunces = Fraunces({
   subsets: ['latin'],
   variable: '--font-fraunces',

@@ -19,3 +19,6 @@
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# admin-edited content and uploads (seeded from seed/)
+/storage/

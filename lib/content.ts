@@ -1,7 +1,5 @@
 import fs from 'fs';
-import path from 'path';
-
-const CONTENT_PATH = path.join(process.cwd(), 'data', 'content.json');
+import { CONTENT_PATH, ensureStorage } from './storage';
 
 export type SiteContent = {
   business: {
@@ -44,10 +42,16 @@ export type SiteContent = {
 };
 
 export function getContent(): SiteContent {
+  ensureStorage();
   const raw = fs.readFileSync(CONTENT_PATH, 'utf-8');
   return JSON.parse(raw);
 }
 
 export function saveContent(content: SiteContent): void {
-  fs.writeFileSync(CONTENT_PATH, JSON.stringify(content, null, 2), 'utf-8');
+  ensureStorage();
+  // Write to a temp file then rename, so a crash mid-write can't leave a
+  // half-written content.json behind.
+  const tmpPath = `${CONTENT_PATH}.tmp`;
+  fs.writeFileSync(tmpPath, JSON.stringify(content, null, 2), 'utf-8');
+  fs.renameSync(tmpPath, CONTENT_PATH);
 }
