@@ -22,8 +22,11 @@ export function ensureStorage(): void {
 
   fs.mkdirSync(STORAGE_DIR, { recursive: true });
 
+  const seedContentPath = path.join(SEED_DIR, 'content.json');
   if (!fs.existsSync(CONTENT_PATH)) {
-    fs.copyFileSync(path.join(SEED_DIR, 'content.json'), CONTENT_PATH);
+    fs.copyFileSync(seedContentPath, CONTENT_PATH);
+  } else {
+    upgradePlaceholders(seedContentPath);
   }
 
   // Only fills in missing files, so uploads already on the volume are kept.
@@ -38,4 +41,37 @@ export function ensureStorage(): void {
   }
 
   seeded = true;
+}
+
+const isPlaceholder = (url: unknown) =>
+  typeof url === 'string' && url.endsWith('-placeholder.svg');
+
+// When seed/ ships a real image for a spot that still shows a placeholder on
+// the live site, swap it in. Anything the admin has uploaded is left alone.
+function upgradePlaceholders(seedContentPath: string): void {
+  const seed = JSON.parse(fs.readFileSync(seedContentPath, 'utf-8'));
+  const live = JSON.parse(fs.readFileSync(CONTENT_PATH, 'utf-8'));
+  let changed = false;
+
+  const upgrade = (liveObj: any, seedObj: any, key: string) => {
+    if (!liveObj || !seedObj) return;
+    if (isPlaceholder(liveObj[key]) && seedObj[key] && !isPlaceholder(seedObj[key])) {
+      liveObj[key] = seedObj[key];
+      changed = true;
+    }
+  };
+
+  upgrade(live.business, seed.business, 'logo');
+  upgrade(live.home, seed.home, 'heroImage');
+  upgrade(live.about, seed.about, 'image');
+  for (const category of live.products?.categories ?? []) {
+    const seedCategory = seed.products?.categories?.find((c: any) => c.id === category.id);
+    upgrade(category, seedCategory, 'image');
+  }
+
+  if (changed) {
+    const tmpPath = `${CONTENT_PATH}.tmp`;
+    fs.writeFileSync(tmpPath, JSON.stringify(live, null, 2), 'utf-8');
+    fs.renameSync(tmpPath, CONTENT_PATH);
+  }
 }
