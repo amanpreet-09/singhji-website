@@ -5,8 +5,8 @@ export const metadata: Metadata = {
   title: 'Contact | Singhji Enterprises'
 };
 
-export default function ContactPage() {
-  const content = getContent();
+export default async function ContactPage() {
+  const content = await getContent();
   const { contact, business } = content;
 
   return (

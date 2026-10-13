@@ -6,8 +6,8 @@ export const metadata: Metadata = {
   title: 'About | Singhji Enterprises'
 };
 
-export default function AboutPage() {
-  const content = getContent();
+export default async function AboutPage() {
+  const content = await getContent();
   const { about } = content;
 
   return (

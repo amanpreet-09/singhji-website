@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid content shape' }, { status: 400 });
   }
 
-  saveContent(body);
+  await saveContent(body);
   revalidatePath('/', 'layout');
   return NextResponse.json({ ok: true });
 }

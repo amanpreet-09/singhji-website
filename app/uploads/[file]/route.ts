@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
 import path from 'path';
-import { ensureStorage, UPLOAD_DIR } from '@/lib/storage';
+import { readLocalUpload } from '@/lib/storage';
 
-// Uploaded photos are served from the storage volume at request time, so a
-// new upload is visible immediately without a rebuild or restart.
+// Serves photos uploaded to disk (local/Docker) and the bundled seed photos.
+// On Vercel, new uploads live in Vercel Blob and are linked to directly.
 const CONTENT_TYPES: Record<string, string> = {
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
@@ -25,14 +24,12 @@ export async function GET(
     return new NextResponse('Not found', { status: 404 });
   }
 
-  ensureStorage();
-  const filePath = path.join(UPLOAD_DIR, name);
-
-  if (!fs.existsSync(filePath)) {
+  const data = readLocalUpload(name);
+  if (!data) {
     return new NextResponse('Not found', { status: 404 });
   }
 
-  return new NextResponse(fs.readFileSync(filePath), {
+  return new NextResponse(new Uint8Array(data), {
     headers: {
       'Content-Type': contentType,
       // Upload names are unique, so a file at a given URL never changes.

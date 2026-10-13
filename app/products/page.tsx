@@ -6,8 +6,8 @@ export const metadata: Metadata = {
   title: 'Products | Singhji Enterprises'
 };
 
-export default function ProductsPage() {
-  const content = getContent();
+export default async function ProductsPage() {
+  const content = await getContent();
   const { products, business } = content;
 
   return (

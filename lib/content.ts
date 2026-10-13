@@ -1,5 +1,4 @@
-import fs from 'fs';
-import { CONTENT_PATH, ensureStorage } from './storage';
+import { readContentJson, writeContentJson } from './storage';
 
 export type SiteContent = {
   business: {
@@ -41,17 +40,10 @@ export type SiteContent = {
   };
 };
 
-export function getContent(): SiteContent {
-  ensureStorage();
-  const raw = fs.readFileSync(CONTENT_PATH, 'utf-8');
-  return JSON.parse(raw);
+export async function getContent(): Promise<SiteContent> {
+  return readContentJson();
 }
 
-export function saveContent(content: SiteContent): void {
-  ensureStorage();
-  // Write to a temp file then rename, so a crash mid-write can't leave a
-  // half-written content.json behind.
-  const tmpPath = `${CONTENT_PATH}.tmp`;
-  fs.writeFileSync(tmpPath, JSON.stringify(content, null, 2), 'utf-8');
-  fs.renameSync(tmpPath, CONTENT_PATH);
+export async function saveContent(content: SiteContent): Promise<void> {
+  await writeContentJson(content);
 }

@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isAuthed } from '@/lib/auth';
-import fs from 'fs';
-import path from 'path';
-import { ensureStorage, UPLOAD_DIR } from '@/lib/storage';
+import { saveUpload } from '@/lib/storage';
 
 const EXTENSIONS: Record<string, string> = {
   'image/jpeg': 'jpg',
@@ -10,7 +8,8 @@ const EXTENSIONS: Record<string, string> = {
   'image/webp': 'webp',
   'image/svg+xml': 'svg'
 };
-const MAX_SIZE = 5 * 1024 * 1024; // 5MB
+// Vercel rejects request bodies over 4.5MB
+const MAX_SIZE = 4 * 1024 * 1024; // 4MB
 
 export async function POST(req: NextRequest) {
   if (!(await isAuthed())) {
@@ -33,16 +32,12 @@ export async function POST(req: NextRequest) {
   }
 
   if (file.size > MAX_SIZE) {
-    return NextResponse.json({ error: 'File must be under 5MB' }, { status: 400 });
+    return NextResponse.json({ error: 'File must be under 4MB' }, { status: 400 });
   }
 
-  ensureStorage();
-
   const safeName = `${Date.now()}-${Math.round(Math.random() * 1e6)}.${ext}`;
-  const filePath = path.join(UPLOAD_DIR, safeName);
-
   const buffer = Buffer.from(await file.arrayBuffer());
-  fs.writeFileSync(filePath, buffer);
+  const url = await saveUpload(safeName, buffer, file.type);
 
-  return NextResponse.json({ url: `/uploads/${safeName}` });
+  return NextResponse.json({ url });
 }

@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { getContent } from '@/lib/content';
 import CategoryCard from '@/components/CategoryCard';
 
-export default function HomePage() {
-  const content = getContent();
+export default async function HomePage() {
+  const content = await getContent();
   const { home, business, products } = content;
 
   return (

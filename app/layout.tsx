@@ -29,12 +29,12 @@ export const metadata: Metadata = {
     'Manufacturer and supplier of school uniforms, sportswear, corporate wear and custom apparel. Based in Mangaluru, Karnataka. Bulk and institutional orders welcome.'
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children
 }: {
   children: React.ReactNode;
 }) {
-  const content = getContent();
+  const content = await getContent();
 
   return (
     <html lang="en" className={`${fraunces.variable} ${inter.variable}`}>

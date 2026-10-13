@@ -71,10 +71,15 @@ work the same way — replace them any time from the dashboard.
   from `seed/` (starting text + placeholder photos). Edit `seed/` only to
   change the defaults for a fresh install.
 
-**Deploying:** `storage/` must be on persistent disk, or every redeploy wipes
-your edits. The Docker image sets `STORAGE_DIR=/app/storage`. On Railway,
-attach a Volume to the service: the app automatically stores everything at
-the volume's mount path (`RAILWAY_VOLUME_MOUNT_PATH`).
+**Deploying on Vercel:** Vercel's disk is read-only, so the site stores
+content and uploaded photos in **Vercel Blob** whenever the
+`BLOB_READ_WRITE_TOKEN` environment variable is set (Vercel adds it
+automatically when you connect a Blob store to the project). Also set
+`ADMIN_PASSWORD` in the project's Environment Variables.
+
+**Deploying with Docker:** `storage/` must be on persistent disk, or every
+redeploy wipes your edits. The Docker image sets `STORAGE_DIR=/app/storage`;
+mount a volume there.
 
 ## Project structure
 
