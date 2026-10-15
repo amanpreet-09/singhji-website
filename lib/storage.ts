@@ -4,12 +4,13 @@ import { get, put } from '@vercel/blob';
 
 // Everything the admin panel can change (site text + uploaded photos) is kept
 // in one of two places:
-// - Vercel Blob, when BLOB_READ_WRITE_TOKEN is set (Vercel's disk is
-//   read-only, so files written there would be lost).
+// - Vercel Blob, when a store is connected to the Vercel project (Vercel's
+//   disk is read-only, so files written there would be lost). Vercel sets
+//   BLOB_STORE_ID (OIDC auth) or BLOB_READ_WRITE_TOKEN (older stores).
 // - STORAGE_DIR on disk otherwise (local dev, Docker with a volume).
 // The repo's seed/ folder holds the starting content and placeholder photos,
 // used until the admin saves something.
-const USE_BLOB = !!process.env.BLOB_READ_WRITE_TOKEN;
+const USE_BLOB = !!(process.env.BLOB_STORE_ID || process.env.BLOB_READ_WRITE_TOKEN);
 
 export const STORAGE_DIR =
   process.env.RAILWAY_VOLUME_MOUNT_PATH ||

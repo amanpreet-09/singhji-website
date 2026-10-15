@@ -72,9 +72,9 @@ work the same way — replace them any time from the dashboard.
   change the defaults for a fresh install.
 
 **Deploying on Vercel:** Vercel's disk is read-only, so the site stores
-content and uploaded photos in **Vercel Blob** whenever the
-`BLOB_READ_WRITE_TOKEN` environment variable is set (Vercel adds it
-automatically when you connect a Blob store to the project). Also set
+content and uploaded photos in **Vercel Blob** whenever a Blob store is
+connected to the project (Vercel then sets `BLOB_STORE_ID` or
+`BLOB_READ_WRITE_TOKEN` automatically). Create the store with **Public** access. Also set
 `ADMIN_PASSWORD` in the project's Environment Variables.
 
 **Deploying with Docker:** `storage/` must be on persistent disk, or every
